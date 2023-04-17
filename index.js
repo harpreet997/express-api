@@ -8,7 +8,7 @@ const productRoute = require('./routes/productroute');
 
 const app = express();
 const port = process.env.PORT || 5000;
-
+app.use("/public/assets", express.static('public/assets'))
 app.use(express.json());
 app.use(cors());
 

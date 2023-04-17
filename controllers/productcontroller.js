@@ -1,5 +1,6 @@
 const ProductModal = require('../models/productmodal');
 const path = require('path');
+const url = require('url');
 const testPath = path.join(__dirname, '..', 'public', 'assets');
 const newPath = testPath.replace(/\\/g, "/")
 console.log(newPath)
@@ -13,13 +14,16 @@ const addProduct = async (req, res) => {
         // }
 
         const imagePath = path.join(newPath, req.file.filename)
-        
+        const newPath1 = `http://localhost:4000/public/assets/`
+        var q = url.parse(newPath1, true);
+        const newPath2 = `http://${q.host}/public/assets/${req.file.filename}`
+        console.log(imagePath)
         var product = new ProductModal({
             productname: req.body.productname,
             rating: req.body.rating,
             price: req.body.price,
             description: req.body.description,
-            images: imagePath
+            images: newPath2
         })
 
         const productData = await product.save();
