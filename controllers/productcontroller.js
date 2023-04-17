@@ -16,7 +16,7 @@ const addProduct = async (req, res) => {
         const imagePath = path.join(newPath, req.file.filename)
         const newPath1 = `http://localhost:${process.env.PORT}/public/assets/`
         var q = url.parse(newPath1, true);
-        const newPath2 = `https://node-product-management.vercel.app/public/assets/${req.file.filename}`
+        const newPath2 = `https://node-product-management.vercel.app/${req.file.filename}`
         console.log(imagePath)
         var product = new ProductModal({
             productname: req.body.productname,
