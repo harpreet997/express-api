@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
-
+const asyncWrapper = require('../middleware/async')
+const { createCustomError } = require('../errors/custom-error')
 
 const productRoute = express();
 productRoute.use(bodyParser.json());
@@ -38,7 +39,17 @@ const getAllProducts = async (req, res) => {
     res.status(200).json({ Products })
 }
 
+const deleteProduct = asyncWrapper(async (req, res) => {
+    const { id: productID } = req.params
+    const product = await ProductModal.findOneAndDelete({ _id: productID})
+    if (!product) {
+        return next(createCustomError(`No Product with id : ${productID}`, 404))
+    }
+    res.status(200).json({ msg: "Product Deleted Successfully" })
+})
+
 productRoute.post('/', upload.single('images'), productController);
+productRoute.delete('/:id', deleteProduct);
 productRoute.get('/', getAllProducts);
 module.exports = productRoute
 
