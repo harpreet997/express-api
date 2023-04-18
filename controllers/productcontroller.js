@@ -14,7 +14,7 @@ const addProduct = async (req, res) => {
         // }
 
         const imagePath = path.join(newPath, req.file.filename)
-        const newPath1 = `https://node-product-management.vercel.app/public/assets/`
+        const newPath1 = `localhost:4000/products/public/assets/`
         var q = url.parse(newPath1, true);
         console.log(q.host)
         const newPath2 = `https://${q.host}/public/assets/${req.file.filename}`
